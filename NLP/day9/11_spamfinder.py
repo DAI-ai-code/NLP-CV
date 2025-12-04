@@ -36,5 +36,5 @@ def result():
         return render_template('spamoutput.html', data=data)
 
 
-if __name__=='main':
+if __name__=='__main__':
     app.run(debug=True)
