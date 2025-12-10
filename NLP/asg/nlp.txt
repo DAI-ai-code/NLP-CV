@@ -1,0 +1,82 @@
+Page 12
+CO3354 Introduction to natural language processing
+2.2 Introduction
+People communicate in many different ways: through speaking and listening,
+making gestures, using specialised hand signals (such as when driving or directing
+trafﬁc), using sign languages for the deaf, or through various forms of text.
+By text we mean words that are written or printed on a ﬂat surface (paper, card,
+street signs and so on) or displayed on a screen or electronic device in order to be
+read by their intended recipient (or by whoever happens to be passing by).
+This course will focus only on the last of these: we will be concerned with various
+ways in which computer systems can analyse and interpret texts, and we will assume
+for convenience that these texts are presented in an electronic format. This is of
+course quite a reasonable assumption, given the huge amount of text we can access
+via the World Wide Web and the increasing availability of electronic versions of
+newspapers, novels, textbooks and indeed subject guides. This chapter introduces
+some essential concepts, techniques and terminology that will be applied in the rest
+of the course. Some material in this chapter is a little technical but no programming
+is involved at this stage.
+We will begin in section 2.3 by considering texts as strings of characters which can
+be broken up into sub-strings, and introduce some techniques for informally
+describing patterns of various kinds that occur in texts. Subsequently in section 2.4
+we will begin to motivate the analysis of texts in terms of hierarchical structures in
+which elements of various kinds can be embedded within each other, in a
+comparable way to the elements that make up an HTML web document. This section
+introduces some technical machinery such as: ﬁnite-state machines (FSMs), regular
+expressions, regular grammars and context-free grammars.
+2.3 Basic concepts
+2.3.1 Tokenised text and pattern matching
+One of the more basic operations that can be applied to a text is tokenising:
+breaking up a stream of characters into words, punctuation marks, numbers and
+other discrete items. So for example the character string
+“Dr. Watson, Mr. Sherlock Holmes”, said Stamford, introducing us.
+can be tokenised as in the following example, where each token is enclosed in single
+quotation marks:
+`"' `Dr.' `Watson' `,' `Mr.' `Sherlock' `Holmes' `"' `,'
+`said' `Stamford' `,' `introducing' `us' `.'
+At this level, words have not been classiﬁed into grammatical categories and we
+have very little indication of syntactic structure. Still, a fair amount of information
+may be obtained from relatively shallow analysis of tokenised text. For example,
+suppose we want to develop a procedure for ﬁnding all personal names in a given
+text. We know that personal names always start with capital letters, but that is not
+enough to distinguish them from names of countries, cities, companies, racehorses
+
+Page 13
+Basic concepts
+and so on, or from capitalisation at the start of a sentence. Some additional ways to
+identify personal names include:
+Use of a title Dr., Mr., Mrs., Miss, Professor and so on.
+A capitalised word or words followed by a comma and a number, usually below
+100: this is a common way of referring to people in news reports, where the
+number stands for their age – for example Pierre Vinken, 61, . . .
+A capitalised word followed by a verb that usually applies to humans: said,
+reported, claimed, thought, argued . . . This can over-generate in the case of
+country or organisation names as in the Crown argues or Britain claimed.
+We can express these more concisely as follows, where jis the disjunction symbol,
+Word stands for a capitalised word and Int is an integer:
+(Dr. jProfessor jMr. jMrs. jMiss jMs) Word
+Word Word, Int
+Word (said jthought jbelieved jclaimed jargued j...)
+Learning activity
+1. Write down your own examples of names that match each of the above patterns.
+2. Pick a newspaper article or webpage that provides a variety of examples of people’s names. Do they
+match the patterns we have encoded above? If not, see if you can devise additional rules for
+recognising names and write them out in a similar format.
+2.3.2 Parts of speech
+A further stage in analysing text is to associate every token with a grammatical
+category or part of speech (POS). A number of different POS classiﬁcations have
+been developed within computational linguistics and we will see some examples in
+subsequent chapters. The following is a list of categories that are often encountered
+in general linguistics: you will be familiar with many of them already from learning
+the grammar of English or other languages, though some terms such as Determiner
+or Conjunction may be new to you.
+Noun ﬁsh, book, house, pen, procrastination, language
+Proper noun John, France, Barack, Goldsmiths, Python
+Verb loves, hates, studies, sleeps, thinks, is, has
+Adjective grumpy , sleepy , happy , bashful
+Adverb slowly , quickly , now, here, there
+Pronoun I, you, he, she, we, us, it, they
+Preposition in, on, at, by , around, with, without
+Conjunction and, but, or, unless
+Determiner the, a, an, some, many , few, 100
+
